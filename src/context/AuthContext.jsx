@@ -17,7 +17,7 @@ export const AuthContextProvider =({children}) =>{
 
     console.log(registerInfo);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     const updateRegisterInfo = useCallback((info)=>{
             setRegisterInfo(info);
     })
@@ -25,19 +25,18 @@ export const AuthContextProvider =({children}) =>{
      const registerUser = useCallback(async (e)=>{
         e.preventDefault();
 
-        // setisRegisterLoading(true);
+        setisRegisterLoading(true);
         setRegisterInfo(null);
 
         const response = await postRequest(`${baseURL}/users/register` , JSON.stringify(registerInfo));
         setisRegisterLoading(false);
 
-        
-
         if(response?.error){
             return setregisterError(response);
         }
-        localStorage.setItem("User" ,JSON.stringify(registerInfo));
+        localStorage.setItem("User" ,JSON.stringify(response));
         setUser(response);
+     
     
     }, [registerInfo]);
 
